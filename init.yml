@@ -3,6 +3,11 @@
 - name: Init brew and bw cli
   hosts: localhost
   connection: local
+  pre_tasks:
+    - name: Detect Host User
+      ansible.builtin.import_tasks: pretasks/whoami.yml
+      tags:
+        - always
   tasks:
     - name: Install brew
       ansible.builtin.include_role:
