@@ -30,3 +30,5 @@ ssh_keys:
   - name: "test_obsidian"
     private_key: "{{ lookup('community.general.bitwarden', 'ssh_obsidian', field='notes') | first }}"
     public_key: "{{ lookup('community.general.bitwarden', 'ssh_obsidian', field='password') | first }}"
+
+git_config_email: "{{ lookup('community.general.bitwarden', 'asl_identity', field='username') | first }}"
