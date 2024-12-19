@@ -16,7 +16,7 @@
 - name: Import ssh private keys
   no_log: true
   ansible.builtin.copy:
-    content: "{{ item.private_key }}"
+    content: "{{ item.private_key }}\n"
     dest: "{{ ansible_env.HOME }}/.ssh/{{ item.name }}"
     owner: "{{ ansible_user }}"
     mode: '0600'
