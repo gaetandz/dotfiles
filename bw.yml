@@ -1,9 +1,0 @@
----
-
-- name: Debug bw
-  hosts: localhost
-  connection: local
-  tasks:
-    - name: test ssh
-      ansible.builtin.include_role:
-        name: ssh

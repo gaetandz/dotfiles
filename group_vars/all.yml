@@ -1,7 +1,6 @@
 ---
 
 default_roles:
-  - brew
   - ssh
   - git
   - bash

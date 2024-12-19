@@ -1,0 +1,14 @@
+---
+
+- name: Init brew and bw cli
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Install brew
+      ansible.builtin.include_role:
+        name: brew
+
+    - name: Install bitwarden-cli
+      community.general.homebrew:
+        name: bitwarden-cli
+        state: present
