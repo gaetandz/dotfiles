@@ -1,8 +1,33 @@
 ---
 
 default_roles:
-  - system
-  - bash
+  - brew
+  - ssh
   - git
+  - bash
+  - system
   - neovim
   - tmux
+
+ssh_config_hosts:
+  - name: "{{ lookup('community.general.bitwarden', 'ssh_config_github', field='username') | first }}"
+    hostname: "{{ lookup('community.general.bitwarden', 'ssh_config_github', field='notes') | first }}"
+    identity_file: "{{ lookup('community.general.bitwarden', 'ssh_config_github', field='password') | first }}"
+    identities_only: "yes"
+    add_keys_to_agent: "yes"
+  - name: "{{ lookup('community.general.bitwarden', 'ssh_config_asl_gitlab', field='username') | first }}"
+    hostname: "{{ lookup('community.general.bitwarden', 'ssh_config_asl_gitlab', field='notes') | first }}"
+    identity_file: "{{ lookup('community.general.bitwarden', 'ssh_config_asl_gitlab', field='password') | first }}"
+    user: git
+  - name: "{{ lookup('community.general.bitwarden', 'ssh_config_asl_gitlab_01', field='username') | first }}"
+    port: 28388
+  - name: "{{ lookup('community.general.bitwarden', 'ssh_config_asl_gitlab_02', field='username') | first }}"
+    port: 28388
+
+ssh_keys:
+  - name: "test_id_rsa"
+    private_key: "{{ lookup('community.general.bitwarden', 'ssh_id_rsa', field='notes') | first }}"
+    public_key: "{{ lookup('community.general.bitwarden', 'ssh_id_rsa', field='password') | first }}"
+  - name: "test_obsidian"
+    private_key: "{{ lookup('community.general.bitwarden', 'ssh_obsidian', field='notes') | first }}"
+    public_key: "{{ lookup('community.general.bitwarden', 'ssh_obsidian', field='password') | first }}"

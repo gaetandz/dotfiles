@@ -1,0 +1,20 @@
+[user]
+	name = {{ git_config_name }}
+	email = {{ git_config_email }}
+	signingkey = {{ git_config_signing_key }}
+[diff]
+	colorMoved = zebra
+[fetch]
+	prune = True
+[init]
+	defaultBranch = {{ git_config_defaultbranch }}
+[pull]
+	rebase = True
+[rebase]
+	autoStash = True
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = True
+[tag]
+	gpgsign = True

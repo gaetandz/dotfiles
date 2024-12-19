@@ -1,0 +1,61 @@
+---
+
+- name: Install Homebrew
+  block:
+    - name: Install Homebrew
+      community.general.homebrew:
+        state: present
+  rescue:
+    - name: Install git (RedHat)
+      ansible.builtin.package:
+        name: git
+        state: present
+      become: true
+
+    - name: Download install script
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+        dest: "{{ ansible_env.HOME }}/brew.sh"
+        mode: '0755'
+
+    - name: Install Homebrew
+      ansible.builtin.shell: /bin/bash -c "NONINTERACTIVE=1 {{ ansible_env.HOME }}/brew.sh"
+      tags:
+        - skip_ansible_lint
+
+- name: Add /home/linuxbrew/.linuxbrew/bin/brew to user's .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0640'
+    create: true
+    state: present
+  notify:
+    - Reload bash
+
+- name: Change default curl with homebrew - curl
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: alias curl='/usr/bin/curl'
+    regexp: "^alias curl"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+    create: true
+
+- name: Change default curl with homebrew - brew
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: alias brew='HOMEBREW_FORCE_BREWED_CURL=1 brew'
+    regexp: "^alias brew"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+    create: true
+
+- name: Run handler now
+  ansible.builtin.meta: flush_handlers

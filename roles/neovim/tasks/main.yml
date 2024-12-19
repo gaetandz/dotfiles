@@ -1,2 +1,19 @@
 ---
 # tasks file for neovim
+
+- name: "Neovim | Dependencies"
+  community.general.homebrew:
+    name:
+      - cmake
+      - curl
+      - pkg-config
+      - libtool
+      - unzip
+      - ansible-lint
+      - ripgrep
+    state: present
+
+- name: "Neovim | Install"
+  community.general.homebrew:
+    name: neovim
+    state: present

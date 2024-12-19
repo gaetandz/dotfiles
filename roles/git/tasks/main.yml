@@ -1,2 +1,15 @@
 ---
 # tasks file for git
+- name: Install git
+  ansible.builtin.package:
+    name: git
+    state: present
+  become: true
+
+- name: Import git config
+  ansible.builtin.template:
+    src: .gitconfig
+    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'

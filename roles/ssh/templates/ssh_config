@@ -1,0 +1,22 @@
+{% for h in ssh_config_hosts %}
+Host {{ h.name }}
+	{% if h.hostname is defined -%}
+        Hostname {{ h.hostname }}
+	{% endif -%}
+	{% if h.identity_file is defined -%}
+        IdentityFile {{ h.identity_file }}
+	{% endif -%}
+	{% if h.identities_only is defined -%}
+        IdentitiesOnly {{ h.identities_only }}
+	{% endif -%}
+	{% if h.add_keys_to_agent is defined -%}
+        AddKeysToAgent {{ h.add_keys_to_agent }}
+	{% endif -%}
+	{% if h.user is defined -%}
+	User {{ h.user }}
+	{% endif -%}
+	{% if h.port is defined -%}
+	Port {{ h.port }}
+	{% endif %}
+
+{% endfor %}
