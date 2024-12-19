@@ -1,5 +1,10 @@
 ---
 # tasks file for ssh
+- name: Create ssh directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    owner: "{{ ansible_user }}"
+    mode: '0700'
 
 - name: Import ssh config
   ansible.builtin.template:
