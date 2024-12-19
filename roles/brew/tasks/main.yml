@@ -28,7 +28,6 @@
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: 'export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"'
     owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: '0640'
     create: true
     state: present
@@ -42,7 +41,6 @@
     line: alias curl='/usr/bin/curl'
     regexp: "^alias curl"
     owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: '0644'
     create: true
 
@@ -53,7 +51,6 @@
     line: alias brew='HOMEBREW_FORCE_BREWED_CURL=1 brew'
     regexp: "^alias brew"
     owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: '0644'
     create: true
 
